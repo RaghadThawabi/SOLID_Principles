@@ -1,25 +1,22 @@
-from abc import ABC, abstractmethod
+class Report:
+    def __init__(self,title,description):
+        self.title = title
+        self.description = description
+
+class ReportPrinter:
+
+    def print_report(self ,report: Report):
+        print(report.title)
+        print(report.description)
+
+def main():
+    title = input("Enter your title: ")
+    description = input("Enter your description: ")
+    report =Report(title,description)
+    printer=ReportPrinter()
+    printer.print_report(report)
+
+if __name__ == "__main__":
+    main()
 
 
-class EventSender(ABC):
-    @abstractmethod
-    def send(self, event):
-        pass
-
-
-class Syslog(EventSender):
-
-    def write(self, msg):
-        with open('path', 'a') as f:
-            f.write(msg)
-
-    def send(self, event):
-        self.write(event)
-
-
-class EventStreamer:
-    def __init__(self, sender: EventSender):
-        self.event_stream = sender
-
-    def send_event(self, event):
-        self.event_stream.send(event)
